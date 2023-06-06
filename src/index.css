@@ -1,0 +1,30 @@
+:root {
+  /* Colors */
+  --primary-purple: hsl(259, 100%, 65%);
+  --primary-light-red: hsl(0, 100%, 67%);
+  --neutral-white: hsl(0, 0%, 100%);
+  --neutral-off-white: hsl(0, 0%, 94%);
+  --neutral-light-grey: hsl(0, 0%, 86%);
+  --neutral-smoke-grey: hsl(0, 1%, 44%);
+  --neutral-off-black: hsl(0, 0%, 8%);
+
+  /* Typography */
+  font-size: 32px;
+  --font-family: 'Poppins', 'Impact', sans-serif;
+  --fw-reg: 400;
+  --fw-bold: 700;
+  --fw-bolder: 800;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  background-color: var(--neutral-off-white);
+  /* height: 100vh; */
+  padding: 2em .5em;
+}
