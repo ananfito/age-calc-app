@@ -25,6 +25,5 @@ body {
   font-family: var(--font-family);
   font-size: 1rem;
   background-color: var(--neutral-off-white);
-  /* height: 100vh; */
   padding: 2em .5em;
 }
