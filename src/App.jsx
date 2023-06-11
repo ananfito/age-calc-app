@@ -51,8 +51,7 @@ function App() {
 
   function validator(data, event) {
     let errors = {}
-    console.log(event.target)
-
+    
     // check for formatting errors in data 
     if (data.birthday < 0 || data.birthday > 31) {
       document.getElementById('birthday').style.borderColor = 'var(--primary-light-red'
