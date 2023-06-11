@@ -25,7 +25,7 @@ function App() {
   let ageMonths = formData.birthMonth > currentMonth + 1 ? (12 - formData.birthMonth) + (currentMonth + 1) : (12 - formData.birthMonth) - (currentMonth + 1)
 
   // age in days 
-  let ageDays = currentDate > formData.birthday ? currentDate - formData.birthday : formData.birthday - currentDate
+  let ageDays = currentDate >= formData.birthday ? currentDate - formData.birthday : currentDate
 
   function handleChange(event) {
     const {name, value} = event.target
@@ -35,6 +35,13 @@ function App() {
       [name]: parseInt(value, 10),
       formSubmitted: false
     }))
+
+    document.getElementById('day').style.color = 'var(--neutral-smoke-grey)'
+    document.getElementById('month').style.color = 'var(--neutral-smoke-grey)'
+    document.getElementById('year').style.color = 'var(--neutral-smoke-grey)'
+    document.getElementById('birthday').style.borderColor = 'var(--neutral-smoke-grey)'
+    document.getElementById('birthMonth').style.borderColor = 'var(--neutral-smoke-grey)'
+    document.getElementById('birthYear').style.borderColor = 'var(--neutral-smoke-grey)'
   }
 
   function handleSubmit(event) {
@@ -44,18 +51,43 @@ function App() {
 
   function validator(data, event) {
     let errors = {}
+    console.log(event.target)
 
     // check for formatting errors in data 
     if (data.birthday < 0 || data.birthday > 31) {
-      event.target.birthday.focus()
+      document.getElementById('birthday').style.borderColor = 'var(--primary-light-red'
+      document.getElementById('day').style.color = 'var(--primary-light-red)'
+      document.getElementById('birthMonth').style.borderColor = 'var(--primary-light-red'
+      document.getElementById('month').style.color = 'var(--primary-light-red)'
+      document.getElementById('birthYear').style.borderColor = 'var(--primary-light-red'
+      document.getElementById('year').style.color = 'var(--primary-light-red)'
+
       errors.birthday = 'Must be a valid day'
-    } else if (data.birthMonth < 0 || data.birthMonth > 12) {
-      event.target.birthMonth.focus()
+    }
+    
+    if (data.birthMonth < 0 || data.birthMonth > 12) {
+      document.getElementById('birthday').style.borderColor = 'var(--primary-light-red'
+      document.getElementById('day').style.color = 'var(--primary-light-red)'
+      document.getElementById('birthMonth').style.borderColor = 'var(--primary-light-red'
+      document.getElementById('month').style.color = 'var(--primary-light-red)'
+      document.getElementById('birthYear').style.borderColor = 'var(--primary-light-red'
+      document.getElementById('year').style.color = 'var(--primary-light-red)'
+
       errors.birthMonth = 'Must be a valid month'
-    } else if (data.birthYear > currentYear) {
-      event.target.birthYear.focus()
+    } 
+    
+    if (data.birthYear > currentYear) {
+      document.getElementById('birthday').style.borderColor = 'var(--primary-light-red'
+      document.getElementById('day').style.color = 'var(--primary-light-red)'
+      document.getElementById('birthMonth').style.borderColor = 'var(--primary-light-red'
+      document.getElementById('month').style.color = 'var(--primary-light-red)'
+      document.getElementById('birthYear').style.borderColor = 'var(--primary-light-red'
+      document.getElementById('year').style.color = 'var(--primary-light-red)'
+
       errors.birthYear = 'Must be in the past'
-    } else {
+    } 
+    
+    else {
       setFormData(prevFormData => ({
         ...prevFormData, 
         formSubmitted: true
@@ -70,7 +102,7 @@ function App() {
       {/* FORM */}
       <form className='form' onSubmit={handleSubmit}>
         <div className="form__data-container">
-          <label className='label' htmlFor="birthday">Day</label>
+          <label className='label' htmlFor="birthday" id='day'>Day</label>
           <input
               className='input'
               type="number"
@@ -85,7 +117,7 @@ function App() {
         </div>
 
         <div className="form__data-container">
-          <label className='label' htmlFor="birthMonth">Month</label>
+          <label className='label' htmlFor="birthMonth" id='month'>Month</label>
           <input
               className='input'
               type="number"
@@ -100,7 +132,7 @@ function App() {
         </div>
 
         <div className="form__data-container">
-          <label className='label' htmlFor="birthYear">Year</label>
+          <label className='label' htmlFor="birthYear" id='year'>Year</label>
           <input
               className='input'
               type="number"
