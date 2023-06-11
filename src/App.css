@@ -61,6 +61,13 @@
   margin: 0;
 }
 
+.error-msg {
+  font-size: .18rem;
+  font-style: italic;
+  color: var(--primary-light-red);
+  margin-top: .5em;
+}
+
 .submit-btn {
   border: none;
   background-color: var(--primary-purple);
@@ -109,6 +116,10 @@
     width: 2.95em;
   }
 
+  .error-msg {
+    font-size: .22rem;
+  }
+
   .submit-btn { 
     top: 77%;
     left: 85%;
@@ -126,6 +137,10 @@
     width: 3em;
   }
 
+  .error-msg {
+    font-size: .25rem;
+  }
+
   .submit-btn {
     top: 80%;
     left: 88%;
@@ -140,6 +155,11 @@
 @media (min-width: 500px) {
   .input {
     font-size: .80rem;
+    width: 3.4em;
+  }
+
+  .error-msg {
+    font-size: .3rem;
   }
 
   .submit-btn {

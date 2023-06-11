@@ -3,89 +3,133 @@ import './App.css'
 import arrowIconUrl from './assets/icon-arrow.svg'
 
 function App() {
-  const [age, setAge] = useState({
-    day: '',
-    month: '',
-    year: '',
+  const today = new Date()
+  const currentYear = today.getFullYear()
+  const currentMonth = today.getMonth()
+  const currentDate = today.getDate()
+  
+  const [formData, setFormData] = useState({
+    birthday: '',
+    birthMonth: '',
+    birthYear: '',
     formSubmitted: false
   })
 
+  const [errorMessage, setErrorMessage] = useState({})
+
+  // Age Calculation
+  // age in Years
+  let ageYears = formData.birthMonth > currentMonth + 1 ? currentYear - formData.birthYear - 1 : currentYear - formData.birthYear
+  
+  // age in Months
+  let ageMonths = formData.birthMonth > currentMonth + 1 ? (12 - formData.birthMonth) + (currentMonth + 1) : (12 - formData.birthMonth) - (currentMonth + 1)
+
+  // age in days 
+  let ageDays = currentDate > formData.birthday ? currentDate - formData.birthday : formData.birthday - currentDate
+
   function handleChange(event) {
     const {name, value} = event.target
-    console.log('handling change')
-    setAge(prevAge => ({
-      ...prevAge,
-      [name]: parseInt(value, 10)
+    
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [name]: parseInt(value, 10),
+      formSubmitted: false
     }))
-    console.log(age)
   }
 
   function handleSubmit(event) {
     event.preventDefault()
+    setErrorMessage(validator(formData, event))
+  }
 
-    console.log('button clicked')
+  function validator(data, event) {
+    let errors = {}
 
-    // this only tests the logic of the ternary statements below
-    setAge(prevAge => ({
-      ...prevAge,
-      formSubmitted: true
-    }))
+    // check for formatting errors in data 
+    if (data.birthday < 0 || data.birthday > 31) {
+      event.target.birthday.focus()
+      errors.birthday = 'Must be a valid day'
+    } else if (data.birthMonth < 0 || data.birthMonth > 12) {
+      event.target.birthMonth.focus()
+      errors.birthMonth = 'Must be a valid month'
+    } else if (data.birthYear > currentYear) {
+      event.target.birthYear.focus()
+      errors.birthYear = 'Must be in the past'
+    } else {
+      setFormData(prevFormData => ({
+        ...prevFormData, 
+        formSubmitted: true
+      }))
+    }
+
+    return errors
   }
 
   return (
     <div className='container'>
-      <form className='form'>
+      {/* FORM */}
+      <form className='form' onSubmit={handleSubmit}>
         <div className="form__data-container">
-          <label className='label' htmlFor="day">Day</label>
+          <label className='label' htmlFor="birthday">Day</label>
           <input
               className='input'
               type="number"
               placeholder='DD'
-              name="day"
-              id="day"
-              value={age.day}
+              name="birthday"
+              id="birthday"
+              value={formData.birthday}
               onChange={handleChange}
               required
           />
+          {errorMessage.birthday && <p className='error-msg'>{errorMessage.birthday}</p>}
         </div>
 
         <div className="form__data-container">
-          <label className='label' htmlFor="month">Month</label>
+          <label className='label' htmlFor="birthMonth">Month</label>
           <input
               className='input'
               type="number"
               placeholder='MM'
-              name="month"
-              id="month"
-              value={age.month}
+              name="birthMonth"
+              id="birthMonth"
+              value={formData.birthMonth}
               onChange={handleChange}
               required
           />
+          {errorMessage.birthMonth && <p className='error-msg'>{errorMessage.birthMonth}</p>}
         </div>
 
         <div className="form__data-container">
-          <label className='label' htmlFor="year">Year</label>
+          <label className='label' htmlFor="birthYear">Year</label>
           <input
               className='input'
               type="number"
               placeholder='YYYY'
-              name="year"
-              id="year"
-              value={age.year}
+              name="birthYear"
+              id="birthYear"
+              value={formData.birthYear}
               onChange={handleChange}
               required
           />
+          {errorMessage.birthYear && <p className='error-msg'>{errorMessage.birthYear}</p>}
         </div>
-        <button className='submit-btn' onClick={handleSubmit}><img src={arrowIconUrl} alt="down arrow" className='btn-img' /></button>
+
+        <button className='submit-btn'><img src={arrowIconUrl} alt="down arrow" className='btn-img' /></button>
       </form>
 
-      {/* <hr className='divider' /> */}
-      
-
+      {/* RESULTS */}
       <div className="results">
-        <p className="results--text"><span className="results--number">{age.formSubmitted === false ? '--' : age.year}</span>years</p>
-        <p className="results--text"><span className="results--number">{age.formSubmitted === false ? '--' : age.month}</span>months</p>
-        <p className="results--text"><span className="results--number">{age.formSubmitted === false ? '--' : age.day}</span>days</p>
+        <p className="results--text">
+          <span className="results--number">{formData.formSubmitted ? ageYears : '--' }</span>years
+        </p>
+
+        <p className="results--text">
+          <span className="results--number">{formData.formSubmitted ? ageMonths : '--' }</span>months
+        </p>
+
+        <p className="results--text">
+          <span className="results--number">{formData.formSubmitted ? ageDays : '--' }</span>days
+        </p>
       </div>
     </div>
   )
