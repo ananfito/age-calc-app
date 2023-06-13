@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import './App.css'
 import arrowIconUrl from './assets/icon-arrow.svg'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+dayjs().format()
+dayjs.extend(customParseFormat)
 
 function App() {
   const today = new Date()
@@ -27,12 +31,13 @@ function App() {
   // age in days 
   let ageDays = currentDate >= formData.birthday ? currentDate - formData.birthday : currentDate
 
+  // Update form data
   function handleChange(event) {
     const {name, value} = event.target
     
     setFormData(prevFormData => ({
       ...prevFormData,
-      [name]: parseInt(value, 10),
+      [name]: value,
       formSubmitted: false
     }))
 
@@ -44,16 +49,19 @@ function App() {
     document.getElementById('birthYear').style.borderColor = 'var(--neutral-smoke-grey)'
   }
 
+  // Handle form submission 
   function handleSubmit(event) {
     event.preventDefault()
     setErrorMessage(validator(formData, event))
   }
 
+  // Validate form data
   function validator(data, event) {
     let errors = {}
-    
-    // check for formatting errors in data 
-    if (data.birthday < 0 || data.birthday > 31) {
+
+    const birthDate = data.birthYear + '-' + data.birthMonth + '-' + data.birthday
+
+    if (dayjs(birthDate, 'YYYY-MM-DD', true).isValid() === false) {
       document.getElementById('birthday').style.borderColor = 'var(--primary-light-red'
       document.getElementById('day').style.color = 'var(--primary-light-red)'
       document.getElementById('birthMonth').style.borderColor = 'var(--primary-light-red'
@@ -62,9 +70,18 @@ function App() {
       document.getElementById('year').style.color = 'var(--primary-light-red)'
 
       errors.birthday = 'Must be a valid day'
-    }
-    
-    if (data.birthMonth < 0 || data.birthMonth > 12) {
+      errors.birthMonth = 'Must be a valid month'
+      errors.birthYear = 'Must be in the past'
+    } else if (data.birthday <= 0 || data.birthday > 31) {
+      document.getElementById('birthday').style.borderColor = 'var(--primary-light-red'
+      document.getElementById('day').style.color = 'var(--primary-light-red)'
+      document.getElementById('birthMonth').style.borderColor = 'var(--primary-light-red'
+      document.getElementById('month').style.color = 'var(--primary-light-red)'
+      document.getElementById('birthYear').style.borderColor = 'var(--primary-light-red'
+      document.getElementById('year').style.color = 'var(--primary-light-red)'
+
+      errors.birthday = 'Must be a valid day'
+    } else if (data.birthMonth < 0 || data.birthMonth > 12) {
       document.getElementById('birthday').style.borderColor = 'var(--primary-light-red'
       document.getElementById('day').style.color = 'var(--primary-light-red)'
       document.getElementById('birthMonth').style.borderColor = 'var(--primary-light-red'
@@ -73,9 +90,7 @@ function App() {
       document.getElementById('year').style.color = 'var(--primary-light-red)'
 
       errors.birthMonth = 'Must be a valid month'
-    } 
-    
-    if (data.birthYear > currentYear) {
+    } else if (data.birthYear > currentYear) {
       document.getElementById('birthday').style.borderColor = 'var(--primary-light-red'
       document.getElementById('day').style.color = 'var(--primary-light-red)'
       document.getElementById('birthMonth').style.borderColor = 'var(--primary-light-red'
@@ -84,9 +99,7 @@ function App() {
       document.getElementById('year').style.color = 'var(--primary-light-red)'
 
       errors.birthYear = 'Must be in the past'
-    } 
-    
-    else {
+    } else {
       setFormData(prevFormData => ({
         ...prevFormData, 
         formSubmitted: true

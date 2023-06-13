@@ -26,4 +26,7 @@ body {
   font-size: 1rem;
   background-color: var(--neutral-off-white);
   padding: 2em .5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
