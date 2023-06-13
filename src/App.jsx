@@ -52,11 +52,11 @@ function App() {
   // Handle form submission 
   function handleSubmit(event) {
     event.preventDefault()
-    setErrorMessage(validator(formData, event))
+    setErrorMessage(validator(formData))
   }
 
   // Validate form data
-  function validator(data, event) {
+  function validator(data) {
     let errors = {}
 
     const birthDate = data.birthYear + '-' + data.birthMonth + '-' + data.birthday
