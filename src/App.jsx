@@ -110,7 +110,7 @@ function App() {
   }
 
   return (
-    <div className='container'>
+    <main className='container'>
       {/* FORM */}
       <form className='form' onSubmit={handleSubmit}>
         <div className="form__data-container">
@@ -175,7 +175,7 @@ function App() {
           <span className="results--number">{formData.formSubmitted ? ageDays : '--' }</span>days
         </p>
       </div>
-    </div>
+    </main>
   )
 }
 

@@ -54,6 +54,7 @@ Users should be able to:
 - Flexbox
 - Mobile-first workflow
 - [React](https://reactjs.org/) - JS library
+- [DayJs](https://day.js.org/en/) - JS library
 
 ## Author
 

@@ -4,6 +4,9 @@
   background-color: var(--neutral-white);
   border-radius: 30px;
   border-bottom-right-radius: 100px;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 }
 
 
