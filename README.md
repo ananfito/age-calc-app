@@ -62,4 +62,3 @@ Users should be able to:
 - [LinkedIn](https://linkedin.com/in/anthonynanfito)
 - [Portfolio](https://ananfito.github.io)
 - [Blog](https://ananfito.hashnode.dev)
-- Frontend Mentor - [@ananfito](https://www.frontendmentor.io/profile/ananfito)
